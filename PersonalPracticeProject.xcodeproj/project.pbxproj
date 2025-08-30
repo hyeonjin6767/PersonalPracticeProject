@@ -6,6 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C486EC912E61335B00DCDA87 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C486EC902E61335B00DCDA87 /* Alamofire */; };
+		C486EC942E61337800DCDA87 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = C486EC932E61337800DCDA87 /* RxCocoa */; };
+		C486EC962E61337800DCDA87 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C486EC952E61337800DCDA87 /* RxSwift */; };
+		C486EC992E61338700DCDA87 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = C486EC982E61338700DCDA87 /* SnapKit */; };
+		C486EC9C2E61339B00DCDA87 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = C486EC9B2E61339B00DCDA87 /* Kingfisher */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C486EC772E6132FE00DCDA87 /* PersonalPracticeProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PersonalPracticeProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +44,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C486EC962E61337800DCDA87 /* RxSwift in Frameworks */,
+				C486EC992E61338700DCDA87 /* SnapKit in Frameworks */,
+				C486EC942E61337800DCDA87 /* RxCocoa in Frameworks */,
+				C486EC912E61335B00DCDA87 /* Alamofire in Frameworks */,
+				C486EC9C2E61339B00DCDA87 /* Kingfisher in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +91,11 @@
 			);
 			name = PersonalPracticeProject;
 			packageProductDependencies = (
+				C486EC902E61335B00DCDA87 /* Alamofire */,
+				C486EC932E61337800DCDA87 /* RxCocoa */,
+				C486EC952E61337800DCDA87 /* RxSwift */,
+				C486EC982E61338700DCDA87 /* SnapKit */,
+				C486EC9B2E61339B00DCDA87 /* Kingfisher */,
 			);
 			productName = PersonalPracticeProject;
 			productReference = C486EC772E6132FE00DCDA87 /* PersonalPracticeProject.app */;
@@ -107,6 +125,12 @@
 			);
 			mainGroup = C486EC6E2E6132FE00DCDA87;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C486EC8F2E61335B00DCDA87 /* XCRemoteSwiftPackageReference "Alamofire" */,
+				C486EC922E61337800DCDA87 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				C486EC972E61338700DCDA87 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				C486EC9A2E61339B00DCDA87 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C486EC782E6132FE00DCDA87 /* Products */;
 			projectDirPath = "";
@@ -159,9 +183,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parkhj.PersonalPracticeProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -186,9 +214,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.parkhj.PersonalPracticeProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -333,6 +365,69 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C486EC8F2E61335B00DCDA87 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.2;
+			};
+		};
+		C486EC922E61337800DCDA87 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.0;
+			};
+		};
+		C486EC972E61338700DCDA87 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+		C486EC9A2E61339B00DCDA87 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C486EC902E61335B00DCDA87 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C486EC8F2E61335B00DCDA87 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+		C486EC932E61337800DCDA87 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C486EC922E61337800DCDA87 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		C486EC952E61337800DCDA87 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C486EC922E61337800DCDA87 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		C486EC982E61338700DCDA87 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C486EC972E61338700DCDA87 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		C486EC9B2E61339B00DCDA87 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C486EC9A2E61339B00DCDA87 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C486EC6F2E6132FE00DCDA87 /* Project object */;
 }
