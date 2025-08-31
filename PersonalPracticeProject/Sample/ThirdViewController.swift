@@ -1,0 +1,218 @@
+//
+//  ThirdViewController.swift
+//  PersonalPracticeProject
+//
+//  Created by 박현진 on 8/30/25.
+//
+
+import UIKit
+import SnapKit
+import RxSwift
+import RxCocoa
+import Kingfisher
+
+struct Person: Identifiable {
+    let id = UUID()
+    let name: String
+    let email: String
+    let profileImage: String
+}
+
+class ThirdViewController: UIViewController {
+    
+    var sampleUsers: [Person] = [
+        Person(name: "Steven", email: "steven.brown@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/1.jpg"),
+        Person(name: "Mike", email: "mike.wilson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/2.jpg"),
+        Person(name: "Emma", email: "emma.taylor@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/1.jpg"),
+        Person(name: "James", email: "james.anderson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/3.jpg"),
+        Person(name: "Lisa", email: "lisa.martin@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/2.jpg"),
+        Person(name: "John", email: "john.davis@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/4.jpg"),
+        Person(name: "Sarah", email: "sarah.white@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/3.jpg"),
+        Person(name: "David", email: "david.miller@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/5.jpg"),
+        Person(name: "Laura", email: "laura.jones@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/4.jpg"),
+        Person(name: "Tom", email: "tom.wilson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/6.jpg"),
+        Person(name: "Amy", email: "amy.clark@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/5.jpg"),
+        Person(name: "Paul", email: "paul.harris@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/7.jpg"),
+        Person(name: "Karen", email: "karen.lewis@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/6.jpg"),
+        Person(name: "Mark", email: "mark.lee@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/8.jpg"),
+        Person(name: "Helen", email: "helen.young@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/7.jpg"),
+        Person(name: "Ryan", email: "ryan.walker@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/9.jpg"),
+        Person(name: "Lucy", email: "lucy.hall@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/8.jpg"),
+        Person(name: "Eric", email: "eric.allen@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/10.jpg"),
+        Person(name: "Kate", email: "kate.king@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/9.jpg"),
+        Person(name: "Brian", email: "brian.scott@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/11.jpg"),
+        Person(name: "Nancy", email: "nancy.green@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/10.jpg"),
+        Person(name: "Chris", email: "chris.baker@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/12.jpg"),
+        Person(name: "Diana", email: "diana.adams@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/11.jpg"),
+        Person(name: "Kevin", email: "kevin.hill@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/13.jpg"),
+        Person(name: "Julia", email: "julia.wright@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/12.jpg"),
+        Person(name: "Gary", email: "gary.nelson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/14.jpg"),
+        Person(name: "Rachel", email: "rachel.carter@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/13.jpg"),
+        Person(name: "Frank", email: "frank.mitchell@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/15.jpg"),
+        Person(name: "Alice", email: "alice.perez@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/14.jpg"),
+        Person(name: "Scott", email: "scott.roberts@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/16.jpg"),
+        Person(name: "Maria", email: "maria.turner@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/15.jpg"),
+        Person(name: "Peter", email: "peter.phillips@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/17.jpg"),
+        Person(name: "Sandra", email: "sandra.campbell@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/16.jpg"),
+        Person(name: "Jeff", email: "jeff.parker@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/18.jpg"),
+        Person(name: "Paula", email: "paula.evans@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/17.jpg"),
+        Person(name: "Doug", email: "doug.edwards@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/19.jpg"),
+        Person(name: "Linda", email: "linda.collins@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/18.jpg"),
+        Person(name: "Steve", email: "steve.stewart@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/20.jpg"),
+        Person(name: "Carol", email: "carol.morris@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/19.jpg"),
+        Person(name: "Dan", email: "dan.rogers@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/21.jpg"),
+        Person(name: "Ruth", email: "ruth.reed@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/20.jpg"),
+        Person(name: "Greg", email: "greg.cook@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/22.jpg"),
+        Person(name: "Betty", email: "betty.morgan@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/21.jpg"),
+        Person(name: "Alex", email: "alex.bell@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/23.jpg"),
+        Person(name: "Janet", email: "janet.murphy@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/22.jpg"),
+        Person(name: "Phil", email: "phil.bailey@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/24.jpg"),
+        Person(name: "Judy", email: "judy.rivera@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/23.jpg"),
+        Person(name: "Larry", email: "larry.cooper@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/25.jpg"),
+        Person(name: "Rose", email: "rose.richardson@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/24.jpg"),
+        Person(name: "Ralph", email: "ralph.cox@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/men/26.jpg"),
+        Person(name: "Ann", email: "ann.howard@example.com", profileImage: "https://randomuser.me/api/portraits/thumb/women/25.jpg")
+    ]
+    
+    let tableView = UITableView()
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout())
+    let searchBar = UISearchBar()
+    
+    private let disposeBag = DisposeBag()
+    let viewModel = ThirdViewModel()
+    
+    lazy var collectionItems: BehaviorSubject<[String]> = BehaviorSubject(value:[])
+    
+    lazy var tableItems = BehaviorSubject(value: sampleUsers)
+//    lazy var tableItems = PublishRelay<[Person]>()
+//    lazy var tableItems = PublishSubject<[Person]>()
+
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configure()
+        bind()
+    }
+     
+    private func bind() {
+        
+        tableItems
+            .bind(to: tableView.rx.items(cellIdentifier: ThirdTableViewCell.identifier, cellType: ThirdTableViewCell.self)) { (row, element, cell) in
+                let url = URL(string: element.profileImage)
+                cell.profileImageView.kf.setImage(with: url)
+                cell.usernameLabel.text = element.name
+                
+                cell.detailButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        print("더보기 클릭")
+                        let vc = SecondViewController()
+                        vc.navigationItem.title = element.name
+                        owner.navigationController?.pushViewController(vc, animated: true)
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        collectionItems
+            .bind(to: collectionView.rx.items(cellIdentifier: ThirdCollectionViewCell.identifier, cellType: ThirdCollectionViewCell.self)) { (row, element, cell) in
+                cell.label.text = String(element)
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                print(indexPath.item)
+            }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.modelSelected(Person.self)
+            .subscribe { value in
+                print(value.element?.name)
+            }
+            .disposed(by: disposeBag)
+        
+        Observable.zip(
+            tableView.rx.itemSelected,
+            tableView.rx.modelSelected(Person.self)
+        )
+        .bind(with: self) { owner, value in
+            //print(value.0)
+            print(value.1.name)
+            var name = try! owner.collectionItems.value()
+            name.append(value.1.name)
+            owner.collectionItems.onNext(name)
+        }
+        
+//        searchBar.rx.searchButtonClicked
+//            .subscribe(with: self) { owner, _ in
+//                print("서치바 클릭")
+//                guard let text = owner.searchBar.text else { return }
+//                var add = try! owner.tableItems.value()
+//                add.append(Person(name: text, email: "", profileImage: owner.sampleUsers[0].profileImage))
+//                owner.tableItems.onNext(add)
+//            }
+//            .disposed(by: disposeBag)
+
+        // 방법1
+//        let a = searchBar.rx.searchButtonClicked
+//        let b = searchBar.rx.text.orEmpty
+        
+        // 방법2 : 이게맞음
+//        let a = searchBar.rx.text.orEmpty
+//        let b = tableItems
+        
+        // 방법2를 쓰다보면 필요한 추가 기능
+//        searchBar.rx.searchButtonClicked
+//            .withLatestFrom(searchBar.rx.text.orEmpty)
+        
+        
+        let input = ThirdViewModel.Input(searchBarTap: searchBar.rx.text.orEmpty, tableItem: tableItems)
+        let output = viewModel.transform(input: input)
+        
+        output.results
+            .bind(with: self) { owner, value in
+                owner.tableItems.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
+    }
+    
+    private func configure() {
+        view.backgroundColor = .white
+        view.addSubview(tableView)
+        view.addSubview(collectionView)
+        view.addSubview(searchBar)
+        
+        //navigationItem.titleView = searchBar
+        
+        searchBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.horizontalEdges.equalToSuperview()        }
+         
+        collectionView.register(ThirdCollectionViewCell.self, forCellWithReuseIdentifier: ThirdCollectionViewCell.identifier)
+        collectionView.backgroundColor = .lightGray
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(searchBar.snp.bottom)
+            make.horizontalEdges.equalToSuperview()
+            make.height.equalTo(50)
+        }
+        
+        tableView.register(ThirdTableViewCell.self, forCellReuseIdentifier: ThirdTableViewCell.identifier)
+        tableView.backgroundColor = .systemGreen
+        tableView.rowHeight = 100
+        tableView.keyboardDismissMode = .onDrag
+        tableView.snp.makeConstraints { make in
+            make.top.equalTo(collectionView.snp.bottom).offset(10)
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview()
+        }
+    }
+    
+    private func layout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.itemSize = CGSize(width: 80, height: 40)
+        layout.scrollDirection = .horizontal
+        return layout
+    }
+
+}
