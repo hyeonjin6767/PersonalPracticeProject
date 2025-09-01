@@ -81,7 +81,11 @@ class ThirdViewController: UIViewController {
     private let disposeBag = DisposeBag()
     let viewModel = ThirdViewModel()
     
-    lazy var collectionItems: BehaviorSubject<[String]> = BehaviorSubject(value:[])
+//    lazy var collectionItems: BehaviorSubject<[String]> = BehaviorSubject(value:[])
+//    lazy var collectionItems = BehaviorRelay<[String]>(value: [""])
+    lazy var collectionItems = PublishSubject<[String]>()
+
+    
     
     lazy var tableItems = BehaviorSubject(value: sampleUsers)
 //    lazy var tableItems = PublishRelay<[Person]>()
@@ -114,34 +118,47 @@ class ThirdViewController: UIViewController {
             .disposed(by: disposeBag)
         
         collectionItems
-            .bind(to: collectionView.rx.items(cellIdentifier: ThirdCollectionViewCell.identifier, cellType: ThirdCollectionViewCell.self)) { (row, element, cell) in
+            .bind(to: collectionView.rx.items(cellIdentifier: ThirdCollectionViewCell.identifier, cellType: ThirdCollectionViewCell.self)) {
+                (row, element, cell) in
+                
                 cell.label.text = String(element)
             }
             .disposed(by: disposeBag)
-        
+
         tableView.rx.itemSelected
             .bind(with: self) { owner, indexPath in
-                print(indexPath.item)
+                print("인덱스 확인 : ", indexPath.item)
             }
             .disposed(by: disposeBag)
         
         tableView.rx.modelSelected(Person.self)
             .subscribe { value in
-                print(value.element?.name)
+                print("셀 데이터확인 : ", value.element?.name)
             }
             .disposed(by: disposeBag)
         
-        Observable.zip(
-            tableView.rx.itemSelected,
-            tableView.rx.modelSelected(Person.self)
-        )
-        .bind(with: self) { owner, value in
-            //print(value.0)
-            print(value.1.name)
-            var name = try! owner.collectionItems.value()
-            name.append(value.1.name)
-            owner.collectionItems.onNext(name)
-        }
+//        
+//        let c = tableView.rx.itemSelected
+//        let d = tableView.rx.modelSelected(Person.self)
+//        let e = collectionItems
+        
+//        let d = Observable.zip(
+//                        tableView.rx.itemSelected,
+//                        tableView.rx.modelSelected(Person.self)
+//                    )
+        
+        
+//        Observable.zip(
+//            tableView.rx.itemSelected,
+//            tableView.rx.modelSelected(Person.self)
+//        )
+//        .bind(with: self) { owner, value in
+//            //print(value.0)
+//            print(value.1.name)
+//            var name = try! owner.collectionItems.value()
+//            name.append(value.1.name)
+//            owner.collectionItems.onNext(name)
+//        }
         
 //        searchBar.rx.searchButtonClicked
 //            .subscribe(with: self) { owner, _ in
@@ -166,12 +183,32 @@ class ThirdViewController: UIViewController {
 //            .withLatestFrom(searchBar.rx.text.orEmpty)
         
         
-        let input = ThirdViewModel.Input(searchBarTap: searchBar.rx.text.orEmpty, tableItem: tableItems)
+        // "서치바의 빌드하자마자 빈값("")이 인식되서 실행되는 특징 테스트용" : 해결방법1) 서치바입력을 신호로 하지말고 서치바버튼클릭을 신호로 방법2) skip(1) 오퍼레이터(처음1번 건너뛰기)
+        searchBar.rx.text
+            .skip(1)
+            .bind(with: self) { owner, value in
+                print("밸류", value)
+            }
+            .disposed(by: disposeBag)
+        
+        
+        let input = ThirdViewModel.Input(
+            searchBarTap: searchBar.rx.searchButtonClicked,
+            searchText: searchBar.rx.text.orEmpty,
+            tableItem: tableItems,
+            modelSelected: tableView.rx.modelSelected(Person.self)
+        )
         let output = viewModel.transform(input: input)
         
         output.results
             .bind(with: self) { owner, value in
                 owner.tableItems.onNext(value)
+            }
+            .disposed(by: disposeBag)
+        
+        output.selectResult
+            .bind(with: self) { owner, value in
+                owner.collectionItems.onNext(value)
             }
             .disposed(by: disposeBag)
         
